@@ -20,7 +20,7 @@ class TodoTestCase(unittest.TestCase):
 
     def test_tasks_index_with_no_tasks(self):
         rv = self.app.get('/tasks')
-        assert '' in rv.data
+        assert [] == json.loads(rv.data)
 
 if __name__ == '__main__':
     unittest.main()
