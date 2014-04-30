@@ -1,58 +1,45 @@
 import os
-import json
 import sqlite3
-from flask import Flask, g, Response
+from flask import Flask, g, jsonify
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/todo.db'
+db = SQLAlchemy(app)
 
-app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'todo.db'),
-    DEBUG=True,
-    SECRET_KEY='12345',
-    USERNAME='admin',
-    PASSWORD='default'
-))
+# Models
 
-def make_dicts(cursor, row):
-    return dict((cursor.description[idx][0], value)
-        for idx, value in enumerate(row))
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(120), unique=False)
+    completed = db.Column(db.Boolean, unique=True)
 
-def query_db(query, args=()):
-    cur = get_db().execute(query, args)
-    rv = cur.fetchall()
-    cur.close()
-    return rv
+    def __init__(self, text, completed):
+        self.text = text
+        self.completed = completed
 
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(app.config['DATABASE'])
-        db.row_factory = make_dicts
-    return db
+    def __repr__(self):
+        return '<Task %r>' % self.text
 
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
-
-def init_db():
-    with app.app_context():
-        db = get_db()
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    @property
+    def to_json(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id'        : self.id,
+            'text'      : self.text,
+            'completed' : self.completed
+        }
 
 # Routing
 
 @app.route("/")
 def hello():
-  return 'hello world!'
+    return 'hello world!'
 
 @app.route("/tasks")
 def index():
-    results = query_db('select id, text, completed from tasks')
-    return Response(json.dumps(results), mimetype='application/json')
+    results = Task.query.all()
+    return jsonify(tasks=[i.to_json for i in results])
 
 @app.route("/tasks", methods=['POST'])
 def create():
