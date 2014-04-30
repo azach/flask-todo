@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, request
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(120), unique=False)
-    completed = db.Column(db.Boolean, unique=True)
+    completed = db.Column(db.Boolean, unique=False)
 
     def __init__(self, text, completed):
         self.text = text
@@ -43,7 +43,10 @@ def index():
 
 @app.route("/tasks", methods=['POST'])
 def create():
-    return "Created a task!"
+    task = Task(request.form['text'], 0)
+    db.session.add(task)
+    db.session.commit()
+    return jsonify(task.to_json)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
