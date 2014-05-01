@@ -18,7 +18,7 @@ class TodoTestCase(unittest.TestCase):
         db.drop_all()
 
     def test_index_responds_successfully(self):
-      assert '200 OK' in self.app.get('/').status
+      assert '200 OK' == self.app.get('/').status
 
     def test_tasks_index_with_no_tasks(self):
         rv = self.app.get('/tasks')
@@ -33,6 +33,14 @@ class TodoTestCase(unittest.TestCase):
 
         rv = self.app.get('/tasks')
         assert {"tasks": [task_1.to_json, task_2.to_json]} == json.loads(rv.data)
+
+    def test_tasks_create_invalid_task(self):
+        rv = self.app.post('/tasks')
+        assert '400 BAD REQUEST' == rv.status
+
+    def test_tasks_create_valid_task(self):
+        rv = self.app.post('/tasks', data=dict(text='a new task!'))
+        assert {"completed": False, "id": 1, "text": "a new task!"} == json.loads(rv.data)
 
 if __name__ == '__main__':
     unittest.main()
