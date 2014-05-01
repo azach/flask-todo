@@ -1,3 +1,4 @@
+import json
 import os
 import sqlite3
 from flask import Flask, g, jsonify, request, render_template
@@ -38,7 +39,7 @@ def hello():
 @app.route("/tasks")
 def index():
     results = Task.query.all()
-    return jsonify(tasks=[i.to_json for i in results])
+    return json.dumps([i.to_json for i in results])
 
 @app.route("/tasks", methods=['POST'])
 def create():

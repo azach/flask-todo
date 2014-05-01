@@ -1,4 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
   <h1>Todo</h1>
+  <div id="tasks-app">
+    <ul id="task-list"></ul>
+  </div>
+  <script type="text/template" id="task-template">
+    <%= text %>
+  </script>
 {% endblock %}

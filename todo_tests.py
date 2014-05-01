@@ -22,7 +22,7 @@ class TodoTestCase(unittest.TestCase):
 
     def test_tasks_index_with_no_tasks(self):
         rv = self.app.get('/tasks')
-        assert {"tasks": []} == json.loads(rv.data)
+        assert [] == json.loads(rv.data)
 
     def test_tasks_index_with_tasks(self):
         task_1 = Task('some task', 0)
@@ -32,7 +32,7 @@ class TodoTestCase(unittest.TestCase):
         db.session.commit()
 
         rv = self.app.get('/tasks')
-        assert {"tasks": [task_1.to_json, task_2.to_json]} == json.loads(rv.data)
+        assert [task_1.to_json, task_2.to_json] == json.loads(rv.data)
 
     def test_tasks_create_invalid_task(self):
         rv = self.app.post('/tasks')
