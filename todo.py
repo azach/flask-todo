@@ -23,7 +23,6 @@ class Task(db.Model):
 
     @property
     def to_json(self):
-        """Return object data in easily serializeable format"""
         return {
             'id'        : self.id,
             'text'      : self.text,
@@ -45,6 +44,13 @@ def index():
 def create():
     task = Task(request.form['text'], 0)
     db.session.add(task)
+    db.session.commit()
+    return jsonify(task.to_json)
+
+@app.route("/tasks/<task_id>", methods=['PUT'])
+def update(task_id):
+    task = Task.query.filter_by(id=task_id).first()
+    task.completed = 1 if request.form['completed'] == '1' else 0
     db.session.commit()
     return jsonify(task.to_json)
 

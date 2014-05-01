@@ -42,5 +42,21 @@ class TodoTestCase(unittest.TestCase):
         rv = self.app.post('/tasks', data=dict(text='a new task!'))
         assert {"completed": False, "id": 1, "text": "a new task!"} == json.loads(rv.data)
 
+    def test_tasks_completing_existing_task(self):
+        task = Task('some task', 0)
+        db.session.add(task)
+        db.session.commit()
+
+        rv = self.app.put('/tasks/' + str(task.id), data=dict(completed='1'))
+        assert {"completed": True, "id": 1, "text": "some task"} == json.loads(rv.data)
+
+    def test_tasks_uncompleting_existing_task(self):
+        task = Task('some task', 1)
+        db.session.add(task)
+        db.session.commit()
+
+        rv = self.app.put('/tasks/' + str(task.id), data=dict(completed='0'))
+        assert {"completed": False, "id": 1, "text": "some task"} == json.loads(rv.data)
+
 if __name__ == '__main__':
     unittest.main()
