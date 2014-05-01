@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, g, jsonify, request
+from flask import Flask, g, jsonify, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ class Task(db.Model):
 
 @app.route("/")
 def hello():
-    return 'hello world!'
+    return render_template('index.html')
 
 @app.route("/tasks")
 def index():
