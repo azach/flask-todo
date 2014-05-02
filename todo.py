@@ -26,6 +26,23 @@ class Task(db.Model):
     def __repr__(self):
         return '<Task %r>' % str(self.position)
 
+    def update_position(self, new_position):
+        current_position = self.position
+
+        if current_position < new_position:
+            reordered_tasks = Task.query.filter(Task.position.between(current_position + 1, new_position)).all()
+
+            for task in reordered_tasks:
+                task.position -= 1
+        else:
+            reordered_tasks = Task.query.filter(Task.position.between(new_position, current_position - 1)).all()
+
+            for task in reordered_tasks:
+                task.position += 1
+
+        self.position = new_position
+        db.session.commit()
+
     @property
     def to_json(self):
         return {
@@ -57,26 +74,14 @@ def create():
 @app.route("/tasks/<task_id>", methods=['PUT'])
 def update(task_id):
     task = Task.query.filter_by(id=task_id).first()
+
     if request.json.has_key('position'):
-        old_position = task.position
-        new_position = request.json['position']
-
-        if old_position < new_position:
-            reordered_tasks = Task.query.filter(Task.position.between(old_position + 1, new_position)).all()
-
-            for reordered_task in reordered_tasks:
-                reordered_task.position = reordered_task.position - 1
-        else:
-            reordered_tasks = Task.query.filter(Task.position.between(new_position, old_position - 1)).all()
-
-            for reordered_task in reordered_tasks:
-                reordered_task.position = reordered_task.position + 1
-
-        task.position = new_position
+        task.update_position(request.json['position'])
 
     if request.json.has_key('completed'):
         task.completed = request.json['completed']
-    db.session.commit()
+        db.session.commit()
+
     return jsonify(task.to_json)
 
 if __name__ == "__main__":
