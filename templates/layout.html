@@ -8,10 +8,10 @@
     <div id="page">
       <div id="content">{% block body %}{% endblock %}</div>
       <div id="javascripts">
-        <script src="{{ url_for('static', filename='jquery-2.1.0.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='sortable.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='underscore-min.js') }}"></script>
-        <script src="{{ url_for('static', filename='backbone-min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/jquery-2.1.0.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/sortable.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/underscore-min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/backbone-min.js') }}"></script>
         <script src="{{ url_for('static', filename='app.js') }}"></script>
       </div>
     </div>
