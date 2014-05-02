@@ -4,7 +4,7 @@ $(function() {
     urlRoot: '/tasks',
 
     toggle: function() {
-      this.save({completed: this.attributes.completed ? 0 : 1});
+      this.save({completed: !this.attributes.completed});
     }
   });
 

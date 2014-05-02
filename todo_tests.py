@@ -24,8 +24,8 @@ class TodoTestCase(unittest.TestCase):
         assert [] == json.loads(rv.data)
 
     def test_tasks_index_with_tasks(self):
-        task_1 = Task('some task', 0)
-        task_2 = Task('some other task', 1)
+        task_1 = Task('some task', False)
+        task_2 = Task('some other task', True)
         db.session.add(task_1)
         db.session.add(task_2)
         db.session.commit()
@@ -42,19 +42,19 @@ class TodoTestCase(unittest.TestCase):
         assert {"completed": False, "id": 1, "text": "a new task!"} == json.loads(rv.data)
 
     def test_tasks_completing_existing_task(self):
-        task = Task('some task', 0)
+        task = Task('some task', False)
         db.session.add(task)
         db.session.commit()
 
-        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': 1}))
+        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': True}))
         assert {"completed": True, "id": 1, "text": "some task"} == json.loads(rv.data)
 
     def test_tasks_uncompleting_existing_task(self):
-        task = Task('some task', 1)
+        task = Task('some task', True)
         db.session.add(task)
         db.session.commit()
 
-        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': 0}))
+        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': False}))
         assert {"completed": False, "id": 1, "text": "some task"} == json.loads(rv.data)
 
 if __name__ == '__main__':

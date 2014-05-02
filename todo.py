@@ -43,7 +43,7 @@ def index():
 
 @app.route("/tasks", methods=['POST'])
 def create():
-    task = Task(request.json["text"], 0)
+    task = Task(request.json["text"], False)
     db.session.add(task)
     db.session.commit()
     return jsonify(task.to_json)
@@ -51,7 +51,7 @@ def create():
 @app.route("/tasks/<task_id>", methods=['PUT'])
 def update(task_id):
     task = Task.query.filter_by(id=task_id).first()
-    task.completed = 1 if request.json['completed'] == 1 else 0
+    task.completed = request.json['completed']
     db.session.commit()
     return jsonify(task.to_json)
 
