@@ -6,10 +6,9 @@ from todo import db, Task
 
 class TodoTestCase(unittest.TestCase):
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/todo_test.db'
-
     def setUp(self):
         todo.app.config['TESTING'] = True
+        todo.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/todo_test.db'
         self.app = todo.app.test_client()
         db.create_all()
 
