@@ -29,7 +29,7 @@ body { font-family: sans-serif; background: #f6f7f8; }
 
 #tasks-app > ul { margin: 0; padding: 0; list-style: none; }
 
-#tasks-app > ul li { padding: 10px 20px; }
+#tasks-app > ul li { padding: 15px 20px; }
 
 #tasks-app > ul li:nth-child(2n+1) {
   background-color: #F4F7FA;
@@ -44,6 +44,12 @@ body { font-family: sans-serif; background: #f6f7f8; }
   width: 250px;
 }
 
+#mark-all-complete {
+  color: #448CCB;
+  float: right;
+  text-decoration: none;
+}
+
 .task.completed {
   color: #bbb;
   text-decoration: line-through;
@@ -54,4 +60,7 @@ body { font-family: sans-serif; background: #f6f7f8; }
   margin-right: 10px;
 }
 
-.remaining { color: #bdbdbd; }
+.remaining {
+  color: #bdbdbd;
+  display: inline-block;
+}

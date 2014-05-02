@@ -21,5 +21,8 @@
 
   <script type="text/template" id="footer-template">
     <div class="remaining"><%= remaining %> <%= remaining == 1 ? "item" : "items" %> left</div>
+    <% if (remaining > 0) { %>
+      <a id="mark-all-complete" href="#">Mark all as complete</a>
+    <% } %>
   </script>
 {% endblock %}

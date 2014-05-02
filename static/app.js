@@ -25,9 +25,10 @@ $(function() {
 
     template: _.template($('#task-template').html()),
 
-    toggleComplete: function() {
-      this.model.toggle();
-      this.render();
+    toggleComplete: function() { this.model.toggle(); },
+
+    initialize: function() {
+      this.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
@@ -42,6 +43,7 @@ $(function() {
     footerTemplate: _.template($('#footer-template').html()),
 
     events: {
+      "click #mark-all-complete": "toggleAllComplete",
       "click #create-task": "createTask",
       "keypress #create-task-text":  "createTaskOnEnter",
     },
@@ -76,7 +78,12 @@ $(function() {
       this.$("#task-list").append(view.render().el);
     },
 
-    addTasks: function() { Tasks.each(this.addTask, this); }
+    addTasks: function() { Tasks.each(this.addTask, this); },
+
+    toggleAllComplete: function (e) {
+      e.preventDefault();
+      _.each(Tasks.remaining(), function(task) { task.toggle(); });
+    }
   });
 
   var Tasks = new TaskList;
