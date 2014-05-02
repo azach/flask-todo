@@ -10,7 +10,10 @@ $(function() {
 
   var TaskList = Backbone.Collection.extend({
     model: Task,
-    url: '/tasks'
+    url: '/tasks',
+    remaining: function() {
+      return this.where({completed: false});
+    }
   });
 
   var TaskView = Backbone.View.extend({
@@ -36,6 +39,8 @@ $(function() {
   var AppView = Backbone.View.extend({
     el: $("#tasks-app"),
 
+    footerTemplate: _.template($('#footer-template').html()),
+
     events: {
       "click #create-task": "createTask",
       "keypress #create-task-text":  "createTaskOnEnter",
@@ -46,7 +51,13 @@ $(function() {
       this.listenTo(Tasks, 'reset', this.addTasks);
       this.listenTo(Tasks, 'all',   this.render);
 
+      this.footer = this.$('#tasks-footer');
+
       Tasks.fetch();
+    },
+
+    render: function() {
+      this.footer.html(this.footerTemplate({remaining: Tasks.remaining().length}));
     },
 
     createTaskOnEnter: function(e) {

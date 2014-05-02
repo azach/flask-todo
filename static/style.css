@@ -1,4 +1,4 @@
-body { font-family: sans-serif; background: #eee; }
+body { font-family: sans-serif; background: #f6f7f8; }
 
 #content {
   background-color: white;
@@ -11,19 +11,25 @@ body { font-family: sans-serif; background: #eee; }
 }
 
 #tasks-header {
-  text-align: center;
   border-bottom: 2px dashed #ddd;
   padding: 40px 20px;
+  text-align: center;
+}
+
+#tasks-footer {
+  border-top: 2px dashed #ddd;
+  margin-top: 60px;
+  padding: 20px;
 }
 
 #tasks-app > form {
-  padding: 10px;
+  padding: 20px 10px;
   text-align: center;
 }
 
 #tasks-app > ul { margin: 0; padding: 0; list-style: none; }
 
-#tasks-app > ul li { padding: 10px; }
+#tasks-app > ul li { padding: 10px 20px; }
 
 #tasks-app > ul li:nth-child(2n+1) {
   background-color: #F4F7FA;
@@ -47,3 +53,5 @@ body { font-family: sans-serif; background: #eee; }
   float: left;
   margin-right: 10px;
 }
+
+.remaining { color: #bdbdbd; }
