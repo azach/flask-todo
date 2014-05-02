@@ -29,7 +29,10 @@ body { font-family: sans-serif; background: #f6f7f8; }
 
 #tasks-app > ul { margin: 0; padding: 0; list-style: none; }
 
-#tasks-app > ul li { padding: 15px 20px; }
+#tasks-app > ul li {
+  cursor: move;
+  padding: 15px 20px;
+}
 
 #tasks-app > ul li:nth-child(2n+1) {
   background-color: #F4F7FA;

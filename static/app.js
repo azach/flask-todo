@@ -20,12 +20,17 @@ $(function() {
     tagName: "li",
 
     events: {
-      "click .toggle" : "toggleComplete"
+      "click .toggle" : "toggleComplete",
+      "positionUpdated" : "updatePosition"
     },
 
     template: _.template($('#task-template').html()),
 
     toggleComplete: function() { this.model.toggle(); },
+
+    updatePosition: function() {
+      this.model.save({position: this.$el.index()});
+    },
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
@@ -53,7 +58,12 @@ $(function() {
       this.listenTo(Tasks, 'reset', this.addTasks);
       this.listenTo(Tasks, 'all',   this.render);
 
-      this.footer = this.$('#tasks-footer');
+      this.footer   = this.$('#tasks-footer');
+      this.taskList = this.$('#task-list');
+
+      new Sortable(this.taskList[0], {onUpdate: function(e) {
+        $(e.item).trigger('positionUpdated');
+      }});
 
       Tasks.fetch();
     },
@@ -78,7 +88,7 @@ $(function() {
 
     addTask: function(task) {
       var view = new TaskView({model: task});
-      this.$("#task-list").append(view.render().el);
+      this.taskList.append(view.render().el);
     },
 
     addTasks: function() { Tasks.each(this.addTask, this); },
