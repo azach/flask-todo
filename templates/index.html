@@ -2,6 +2,10 @@
 {% block body %}
   <div id="tasks-header"><h1>Todos</h1></div>
   <div id="tasks-app">
+    <form>
+      <input type="text" id="create-task-text" placeholder="What needs to be done?" autofocus></input>
+      <input type="button" id="create-task" value="Add Todo"></input>
+    </form>
     <ul id="task-list"></ul>
   </div>
   <script type="text/template" id="task-template">

@@ -43,7 +43,7 @@ def index():
 
 @app.route("/tasks", methods=['POST'])
 def create():
-    task = Task(request.form['text'], 0)
+    task = Task(request.json["text"], 0)
     db.session.add(task)
     db.session.commit()
     return jsonify(task.to_json)

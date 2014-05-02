@@ -35,11 +35,11 @@ class TodoTestCase(unittest.TestCase):
         assert [task_1.to_json, task_2.to_json] == json.loads(rv.data)
 
     def test_tasks_create_invalid_task(self):
-        rv = self.app.post('/tasks')
+        rv = self.app.post('/tasks', data={}, content_type='application/json')
         assert '400 BAD REQUEST' == rv.status
 
     def test_tasks_create_valid_task(self):
-        rv = self.app.post('/tasks', data=dict(text='a new task!'))
+        rv = self.app.post('/tasks', content_type='application/json', content_length=21, data=json.dumps({'text': 'a new task!'}))
         assert {"completed": False, "id": 1, "text": "a new task!"} == json.loads(rv.data)
 
     def test_tasks_completing_existing_task(self):

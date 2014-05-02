@@ -16,6 +16,11 @@ body { font-family: sans-serif; background: #eee; }
   padding: 40px 20px;
 }
 
+#tasks-app > form {
+  padding: 10px;
+  text-align: center;
+}
+
 #tasks-app > ul { margin: 0; padding: 0; list-style: none; }
 
 #tasks-app > ul li { padding: 10px; }
@@ -23,4 +28,12 @@ body { font-family: sans-serif; background: #eee; }
 #tasks-app > ul li:nth-child(2n+1) {
   background-color: #F4F7FA;
   color: #555;
+}
+
+#create-task-text {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  padding: 7px;
+  width: 250px;
 }
