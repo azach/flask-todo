@@ -37,3 +37,13 @@ body { font-family: sans-serif; background: #eee; }
   padding: 7px;
   width: 250px;
 }
+
+.task.completed {
+  color: #bbb;
+  text-decoration: line-through;
+}
+
+.task .toggle {
+  float: left;
+  margin-right: 10px;
+}

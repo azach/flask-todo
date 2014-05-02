@@ -47,7 +47,7 @@ class TodoTestCase(unittest.TestCase):
         db.session.add(task)
         db.session.commit()
 
-        rv = self.app.put('/tasks/' + str(task.id), data=dict(completed='1'))
+        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': 1}))
         assert {"completed": True, "id": 1, "text": "some task"} == json.loads(rv.data)
 
     def test_tasks_uncompleting_existing_task(self):
@@ -55,7 +55,7 @@ class TodoTestCase(unittest.TestCase):
         db.session.add(task)
         db.session.commit()
 
-        rv = self.app.put('/tasks/' + str(task.id), data=dict(completed='0'))
+        rv = self.app.put('/tasks/' + str(task.id), content_type='application/json', content_length=16, data=json.dumps({'completed': 0}))
         assert {"completed": False, "id": 1, "text": "some task"} == json.loads(rv.data)
 
 if __name__ == '__main__':

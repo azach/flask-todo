@@ -9,6 +9,11 @@
     <ul id="task-list"></ul>
   </div>
   <script type="text/template" id="task-template">
-    <%= text %>
+    <div class="task <%= completed ? 'completed' : '' %>">
+      <label>
+        <%= text %>
+        <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></input>
+      </label>
+    </div>
   </script>
 {% endblock %}

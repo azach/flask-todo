@@ -1,7 +1,11 @@
 $(function() {
   var Task = Backbone.Model.extend({
     defaults: {text: '', completed: false},
-    urlRoot: '/tasks'
+    urlRoot: '/tasks',
+
+    toggle: function() {
+      this.save({completed: this.attributes.completed ? 0 : 1});
+    }
   });
 
   var TaskList = Backbone.Collection.extend({
@@ -12,7 +16,16 @@ $(function() {
   var TaskView = Backbone.View.extend({
     tagName: "li",
 
+    events: {
+      "click .toggle" : "toggleComplete"
+    },
+
     template: _.template($('#task-template').html()),
+
+    toggleComplete: function() {
+      this.model.toggle();
+      this.render();
+    },
 
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));

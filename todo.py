@@ -51,7 +51,7 @@ def create():
 @app.route("/tasks/<task_id>", methods=['PUT'])
 def update(task_id):
     task = Task.query.filter_by(id=task_id).first()
-    task.completed = 1 if request.form['completed'] == '1' else 0
+    task.completed = 1 if request.json['completed'] == 1 else 0
     db.session.commit()
     return jsonify(task.to_json)
 
