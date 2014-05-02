@@ -18,24 +18,26 @@ class Task(db.Model):
     completed = db.Column(db.Boolean, unique=False)
     position  = db.Column(db.Integer, unique=False)
 
-    def __init__(self, text, completed, position):
+    def __init__(self, text, completed, position=None):
         self.text      = text
         self.completed = completed
-        self.position  = position
+        self.position  = position or Task.next_position()
 
     def __repr__(self):
         return '<Task %r>' % str(self.position)
 
-    def update_position(self, new_position):
-        current_position = self.position
+    @classmethod
+    def next_position(self):
+        return (db.session.query(func.max(Task.position)).scalar() or -1) + 1
 
-        if current_position < new_position:
-            reordered_tasks = Task.query.filter(Task.position.between(current_position + 1, new_position)).all()
+    def update_position(self, new_position):
+        if self.position < new_position:
+            reordered_tasks = Task.query.filter(Task.position.between(self.position + 1, new_position)).all()
 
             for task in reordered_tasks:
                 task.position -= 1
         else:
-            reordered_tasks = Task.query.filter(Task.position.between(new_position, current_position - 1)).all()
+            reordered_tasks = Task.query.filter(Task.position.between(new_position, self.position - 1)).all()
 
             for task in reordered_tasks:
                 task.position += 1
@@ -65,8 +67,7 @@ def index():
 
 @app.route("/tasks", methods=['POST'])
 def create():
-    next_position = (db.session.query(func.max(Task.position)).scalar() or -1) + 1
-    task = Task(request.json["text"], False, next_position)
+    task = Task(request.json["text"], False)
     db.session.add(task)
     db.session.commit()
     return jsonify(task.to_json)

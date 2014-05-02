@@ -24,8 +24,8 @@ class TodoTestCase(unittest.TestCase):
         assert [] == json.loads(rv.data)
 
     def test_tasks_index_with_tasks(self):
-        task_1 = Task('some task', False, 0)
-        task_2 = Task('some other task', True, 1)
+        task_1 = Task('some task', False)
+        task_2 = Task('some other task', True)
         db.session.add(task_1)
         db.session.add(task_2)
         db.session.commit()
@@ -54,7 +54,7 @@ class TodoTestCase(unittest.TestCase):
         assert {"completed": False, "id": 1, "text": "a new task!", "position": 0} == json.loads(rv.data)
 
     def test_tasks_completing_existing_task(self):
-        task = Task('some task', False, 0)
+        task = Task('some task', False)
         db.session.add(task)
         db.session.commit()
 
@@ -62,7 +62,7 @@ class TodoTestCase(unittest.TestCase):
         assert {"completed": True, "id": 1, "text": "some task", "position": 0} == json.loads(rv.data)
 
     def test_tasks_uncompleting_existing_task(self):
-        task = Task('some task', True, 0)
+        task = Task('some task', True)
         db.session.add(task)
         db.session.commit()
 
