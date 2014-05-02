@@ -63,7 +63,10 @@ $(function() {
     },
 
     createTaskOnEnter: function(e) {
-      if (e.keyCode === 13) { this.createTask(); }
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        this.createTask();
+      }
     },
 
     createTask: function() {
