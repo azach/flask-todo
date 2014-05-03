@@ -11,13 +11,13 @@ body { font-family: sans-serif; background: #f6f7f8; }
 }
 
 #tasks-header {
-  border-bottom: 2px dashed #ddd;
+  border-bottom: 2px dotted #ddd;
   padding: 30px 20px;
   text-align: center;
 }
 
 #tasks-footer {
-  border-top: 2px dashed #ddd;
+  border-top: 2px dotted #ddd;
   margin-top: 60px;
   padding: 20px;
 }
