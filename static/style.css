@@ -98,3 +98,17 @@ body { font-family: sans-serif; background: #f6f7f8; }
 .task input[type="checkbox"]:checked + label span {
   background: url('checked.png') left top no-repeat;
 }
+
+li:hover .drag-icon {
+  display: inline-block;
+}
+
+.drag-icon {
+  background-image: url('drag-icon.png');
+  display: none;
+  float: right;
+  position: relative;
+  top: 1px;
+  height: 11px;
+  width: 10px;
+}

@@ -14,6 +14,7 @@
     <div class="task <%= completed ? 'completed' : '' %>">
       <input id="cb_<%= this.cid %>" class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></input>
       <label for="cb_<%= this.cid %>"><span></span><%= text %></label>
+      <span class="drag-icon"></span>
     </div>
   </script>
 
