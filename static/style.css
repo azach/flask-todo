@@ -12,7 +12,7 @@ body { font-family: sans-serif; background: #f6f7f8; }
 
 #tasks-header {
   border-bottom: 2px dashed #ddd;
-  padding: 40px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
@@ -43,8 +43,26 @@ body { font-family: sans-serif; background: #f6f7f8; }
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 13px;
-  padding: 7px;
-  width: 250px;
+  height: 22px;
+  margin-right: 5px;
+  padding: 8px;
+  width: 300px;
+}
+
+#create-task {
+  background-color: #dbdad9;
+  background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.5) 51%);
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  color: #666;
+  font-size: 12px;
+  font-weight: 800;
+  height: 40px;
+  width: 145px;
+}
+
+#create-task:active {
+  background-image: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255, 0) 51%);
 }
 
 #mark-all-complete {
