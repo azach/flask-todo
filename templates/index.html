@@ -12,10 +12,8 @@
 
   <script type="text/template" id="task-template">
     <div class="task <%= completed ? 'completed' : '' %>">
-      <label>
-        <%= text %>
-        <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></input>
-      </label>
+      <input id="cb_<%= this.cid %>" class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></input>
+      <label for="cb_<%= this.cid %>"><span></span><%= text %></label>
     </div>
   </script>
 
