@@ -1,5 +1,7 @@
 # This app is built on Flask and Backbone.
 
+Developed using Python 2.7.5
+
 ## To start:
 
 * cd into the todo workspace
